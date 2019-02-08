@@ -43,6 +43,9 @@
     });
 
     function initCanvas() {
+        $('.canvas-container').on('touchmove', function(evt){
+            evt.preventDefault();
+        });
         $('.canvas-container').each(function(index) {
 
             var canvasContainer = $(this)[0];
