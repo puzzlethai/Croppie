@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Title</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.6/fabric.min.js"></script>
+</head>
+<body>
+<canvas id="c"></canvas>
+<!--<img  id="my-image">-->
+<script>
+    var canvas = new fabric.Canvas('c');
+    canvas.setHeight(500);
+    canvas.setWidth(800);
+    fabric.Image.fromURL('dist/test.png', function(oImg) {
+        // scale image down, and flip it, before adding it onto canvas
+        oImg.scale(0.1).set('flipX', true);
+        canvas.add(oImg);
+    });
+    var comicSansText = new fabric.Text("I'm in Comic Sans", {
+        fontFamily: 'Comic Sans',
+        left: 300, top: 400
+    });
+    canvas.add(comicSansText);
+    var anotherItalicText = new fabric.Text("another italic text", {
+        fontStyle: 'italic',
+        fontFamily: 'Hoefler Text',
+        left: 0, top: 400,
+        fontSize: 40
+    });
+    canvas.add(anotherItalicText);
+
+</script>
+</body>
+</html>
