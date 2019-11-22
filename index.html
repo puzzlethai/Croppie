@@ -12,50 +12,41 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.3/croppie.js"></script>
     <script src="https:////leanmodal.finelysliced.com.au/js/jquery.leanModal.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/fabric-with-gestures@2.6.0/dist/fabric.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.5.0/fabric.js"></script>
+
     <link rel="stylesheet" href="dist/one.css">
 </head>
 
 
 <body>
-<div id="modal">
-    <div id="main-cropper"></div>
-    <a class="button actionUpload">
-        <span>Upload</span>
-        <input type="file" id="upload" value="Choose Image" accept="image/*">
-    </a>
-    <button class="actionDone">Done</button>
-    <button class="actionCancel">Cancel</button>
-</div>
+<canvas id="canvas" width="500" height="500">
+</canvas>
 
 
 <script>
-    var basic = $('#main-cropper').croppie({
-        viewport: { width: 250, height: 250 ,type: 'circle' },
-        boundary: { width: 370, height: 320 },
-        enableResize: true,
-        url: 'dist/test.png'
+    var canvas = new fabric.Canvas('canvas', { isDrawingMode: true });
+    var image;
+
+    fabric.Image.fromURL('http://lorempixel.com/500/500/', function(img) {
+        image = img;
+        img.selectable = false;
+        canvas.add(img);
     });
 
-    function readFile(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#main-cropper').croppie('bind', {
-                    url: e.target.result
-                });
-                $('.actionDone').toggle();
-                $('.actionUpload').toggle();
-            };
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    $('.actionUpload input').on('change', function () { readFile(this); });
-    $('.actionDone').on('click', function(){
-        $('.actionDone').toggle();
-        $('.actionUpload').toggle();
+    canvas.on('path:created', function(option) {
+        var path = option.path;
+        image.clipTo = function(ctx) {
+            //save context state
+            ctx.save();
+            //reset context tranformation matrix
+            ctx.setTransform(1,0,0,1,0,0);
+            //render the path
+            path.render(ctx);
+            //restore context state
+            ctx.restore();
+        };
+        canvas.renderAll();
     });
 
 </script>

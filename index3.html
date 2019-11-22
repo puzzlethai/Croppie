@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Title</title>
-
+    <link href="https://fonts.googleapis.com/css?family=Sriracha" rel="stylesheet" type='text/css'>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
@@ -24,18 +24,39 @@
         canvas.add(oImg);
         canvas.setActiveObject(oImg);
     });
-    var comicSansText = new fabric.Text("ชื่อจริง", {
-        fontFamily: 'Comic Sans',
-        left: 300, top: 400
+    var comicSansText = new fabric.IText("ชื่อจริง", {
+        fontFamily: 'Sriracha',
+        left: 300, top: 400,
+        textBackgroundColor: 'red',
+        stroke: 'black',
+        strokeWidth: 3,
+        fontSize: 80
     });
+    comicSansText.setColor('white');
+
     canvas.add(comicSansText);
     var anotherItalicText = new fabric.Text("ภาษาจีน", {
         fontStyle: 'italic',
-        fontFamily: 'Hoefler Text',
-        left: 0, top: 400,
-        fontSize: 40
+        fontFamily: 'Sriracha',
+       /* left: 0, top: 400,*/
+        originX: 'center',
+        originY: 'center',
+        fontSize: 40,
+        fontWeight: 'bolder'
     });
-    canvas.add(anotherItalicText);
+    var circle = new fabric.Circle({
+        radius: 100,
+        fill: '#eef',
+        scaleY: 0.5,
+        originX: 'center',
+        originY: 'center'
+    });
+    var group = new fabric.Group([ circle, anotherItalicText ], {
+        left: 0,
+        top: 400,
+        angle: -10
+    });
+    canvas.add(group);
     canvas.on({
         'touch:gesture': function(e) {
 
